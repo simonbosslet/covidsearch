@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="shortcut icon" type="image/jpg" href="{% static 'covidsearch/facebook-logo.png' %}"/>
+    <link rel="stylesheet" href="{% static 'covidsearch/styles.css' %}">
+</head>
+<body>
+    <div class="header" id="header-div">
+        <h1>Hoosier Covid-19 Update Archive</h1>
+    </div>
+    <div id="body-div">
+        {%block body%}
+        {%endblock%}
+    </div>
+</body>
+</html>

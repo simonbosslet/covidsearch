@@ -1,0 +1,43 @@
+{%extends 'covidsearch/layout.html'%}
+
+{%block title%}Home{%endblock%}
+
+{%block body%} 
+<form id="searchbar" action="{% url 'search' %}" method="POST">
+    {%csrf_token%}
+    <input type="text" name="search-query" id="text" placeholder="Search archive" spellcheck="false">
+</form>
+{%if reverse%}
+<form action="{% url 'index' %}" method="GET" class="select">
+    <select onchange="this.form.submit()" value="oldest">
+        <option>Sort by oldest</option>
+        <option>Sort by newest</option>
+        {%csrf_token%}
+    </select>
+</form>
+<a id="facebook-link" href="https://www.facebook.com/hoosiercovid/" target="_blank">Facebook</a>
+
+{% for post in posts reversed %}
+<div class="post">
+    <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
+    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+</div>
+{% endfor %}
+{%else%}
+<form action="{% url 'index' %}" method="POST" class="select" value="newest">
+    <select onchange="this.form.submit()">
+        <option selected="selected">Sort by oldest</option>
+        <option selected="selected">Sort by newest</option>
+        {%csrf_token%}
+    </select>
+</form>
+<a id="facebook-link" href="https://www.facebook.com/hoosiercovid/" target="_blank">Facebook</a>
+
+{% for post in posts %}
+<div class="post">
+    <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
+    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+</div>
+{% endfor %}
+{%endif%}
+{%endblock%}

@@ -1,0 +1,8 @@
+{%extends 'covidsearch/layout2.html'%}
+
+{%block title%}Post {{post.pk}} - {{post.formatted_date}}{%endblock%}
+
+{%block body%}
+<h1 id="post-title">Date posted: <span id="highlight">{{post.formatted_date}}</span></h1>
+<p id="post-message" style="white-space: pre-wrap;">{{post.message}}</p>
+{%endblock%}

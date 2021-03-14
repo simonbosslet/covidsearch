@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{%block title%}{%endblock%}</title>
+    <link rel="shortcut icon" type="image/jpg" href="{% static 'covidsearch/facebook-logo.png' %}"/>
+    <link rel="stylesheet" href="{% static 'covidsearch/styles.css' %}">
+</head>
+<body>
+    <div id="header-div2">
+        <h1 id="header2">Hoosier Covid-19 Update Archive</h1>
+        <a id="facebook-link2" href="https://www.facebook.com/hoosiercovid/" target="_blank">Facebook</a>
+        <a id="home-link" href="{% url 'index' %}">Home</a>
+        <form id="searchbar2" action="{% url 'search' %}"" method="POST">
+            {%csrf_token%}
+            <input type="text" name="search-query" id="text" placeholder="Search archive" spellcheck="false">
+        </form>
+    </div>
+    <div id="body-div2">
+        {%block body%}
+        {%endblock%}
+    </div>
+</body>
+</html>
