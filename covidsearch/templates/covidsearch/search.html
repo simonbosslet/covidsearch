@@ -1,12 +1,30 @@
 {%extends 'covidsearch/layout2.html'%}
-{% load replace %}
+{% load highlight %}
 
 {%block title%}Search - {{q}}{%endblock%}
 
 {%block body%}
 <h1 id="title2">Results for: <span id="highlight">{{q}}</span></h1>
-<p id="resultcount">{{resultCount}} results</p>
+<p class="resultCount">{{resultCount}} results</p>
+<ul class="pageselector">
+    <form action="{% url 'search'%}" method="POST">
+    {%csrf_token%}
+    {% for i in pages %}
+        {%if i is activepage%}
+            <li><input id="activepage" type="submit" value="{{i}}" name="page"></li>
+        {%else%}
+            <li><input type="submit" value="{{i}}" name="page"></li>
+        {%endif%}
+    {% endfor %}
+    </form>
+</ul>
 
+{%if noResults%}
+<script>
+    alert('No results.')
+    location.href="/archive"
+</script>
+{%else%}
 {%if reverse%}
 <form action="{% url 'search' %}" method="POST" class="select2">
     <select onchange="this.form.submit()" value="oldest">
@@ -19,10 +37,8 @@
 
 {% for post in results reversed %}
 <div class="post">
-    {%if q in post.formatted_date%}
-    <a id="title" href="{% url 'post' post.pk %}">{% replace q post.formatted_date5} </a>
-    <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
-    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+    <a id="title" href="{% url 'post' post.pk %}">{% highlight q post.formatted_date True%}</a>
+    <p id="contents" style="white-space: pre-wrap;">{% highlight q post.message True%}</p>
 </div>
 {% endfor %}
 
@@ -39,9 +55,10 @@
 
 {% for post in results %}
 <div class="post">
-    <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
-    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+    <a id="title" href="{% url 'post' post.pk %}">{% highlight q post.formatted_date True%}</a>
+    <p id="contents" style="white-space: pre-wrap;">{% highlight q post.message True%}</p>
 </div>
 {% endfor %}
+{%endif%}
 {%endif%}
 {%endblock%}

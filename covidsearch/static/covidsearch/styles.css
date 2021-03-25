@@ -2,6 +2,8 @@
     font-family: Helvetica;
     position: relative;
     background-color: rgb(50, 50, 50);
+    z-index: 0;
+    line-height: 30px;
 }
 
 a{
@@ -64,24 +66,30 @@ input[id="text"]{
 
 #title{
     font-size: 30px;
-    background-color: grey;
+    background: transparent;
     color: goldenrod;
+}
+
+#title:hover{
+    text-decoration: underline;
 }
 
 #contents{
     color: white;
     font-size: 20px;
-    background-color: grey;
 }
 
 .post{
     padding: 1vmax;
     top: 5vmax;
-    background-color: grey;
+    background-color: transparent;
     width: 90%;
     left: 5%;
     margin-top: 10px;
     border-radius: 10px;
+    border-top: white 2px solid;
+    border-bottom: white 2px solid;
+    z-index: 0;
 }
 
 #image{
@@ -114,11 +122,21 @@ input[id="text"]{
     padding-bottom: 1vmax;
 }
 
-#searchbar2{
-    position: absolute;
-    z-index: 10;
-    left: 70vmax;
-    top: 2vmax;
+@media (min-width: 770px){
+    #searchbar2{
+        position: absolute;
+        z-index: 10;
+        left: 70vmax;
+        top: 2vmax;
+    }
+}
+@media (max-width: 769px){
+    #text{
+        display: none;
+    }
+    #searchbar2{
+        display: none;
+    }
 }
 
 #facebook-link2{
@@ -145,11 +163,17 @@ input[id="text"]{
     bottom: 2.8vmax;
 }
 
+#noResults{
+    color: red;
+    font-size: 60px;
+    text-align: center;
+}
+
 #home-link:hover{
     text-decoration: underline;
 }
 
-#resultcount{
+.resultCount{
     text-align: center;
     color: white;
 }
@@ -161,7 +185,6 @@ input[id="text"]{
 
 #post-message{
     font-weight: 300;
-    background-color: gray;
     color: white;
     width: 80%;
     left: 10%;
@@ -190,4 +213,80 @@ input[id="text"]{
     border-radius: 5px;
     height: 2vmax;
     top: 1.5vmax;
+}
+
+#query-highlight{
+    background-color: yellow;
+    color: black;
+}
+
+.loadcontain{
+    background-color: transparent;
+    padding: 10px;
+}
+
+.loadbutton{
+    padding: 10px;
+    background:  transparent;
+    z-index: 0;
+    width: fit-content;
+    padding-top: 5%;
+    left: 45%;
+}
+
+#loadbutton{
+    position: inherit;
+    background-color: #2B2F8A;
+    color: white;
+    width: fit-content;
+    height: fit-content;
+    font-size: 1.3vmax;
+    border-radius: 10px;
+}
+
+#loadbutton:hover{
+    background-color: goldenrod;
+    color: black;
+}
+
+.spacer{
+    height: 15%;
+    width: 100%;
+}
+
+.pageselector{
+    padding-left: 5%;
+}
+
+.pageselector>form>li{
+    display: inline;
+}
+
+.pageselector>form>li>input{
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.pageselector>form>li>input:hover{
+    background-color: grey;
+    border-radius: 25px;
+}
+
+#activepage{
+    background-color: orange;
+    border-radius: 25px;
+    color: black;
+}
+
+a{
+    color: #53C1E9;
+}
+
+a:visited{
+    color: #53C1E9;
+}
+
+a:hover{
+    text-decoration: underline;
 }

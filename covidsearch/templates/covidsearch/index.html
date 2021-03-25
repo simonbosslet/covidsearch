@@ -1,4 +1,5 @@
 {%extends 'covidsearch/layout.html'%}
+{%load convertLinks %}
 
 {%block title%}Home{%endblock%}
 
@@ -20,7 +21,7 @@
 {% for post in posts reversed %}
 <div class="post">
     <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
-    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+    <p id="contents" style="white-space: pre-wrap;">{% convertLinks post.message %}</p>
 </div>
 {% endfor %}
 {%else%}
@@ -36,7 +37,7 @@
 {% for post in posts %}
 <div class="post">
     <a id="title" href="{% url 'post' post.pk %}">{{post.formatted_date}}</a>
-    <p id="contents" style="white-space: pre-wrap;">{{post.message}}</p>
+    <p id="contents" style="white-space: pre-wrap;">{% convertLinks post.message %}</p>
 </div>
 {% endfor %}
 {%endif%}
