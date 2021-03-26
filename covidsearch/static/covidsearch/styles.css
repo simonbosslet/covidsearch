@@ -68,6 +68,7 @@ input[id="text"]{
     font-size: 30px;
     background: transparent;
     color: goldenrod;
+    text-decoration: none;
 }
 
 #title:hover{
@@ -281,6 +282,7 @@ input[id="text"]{
 
 a{
     color: #53C1E9;
+    text-decoration: underline;
 }
 
 a:visited{
@@ -288,5 +290,12 @@ a:visited{
 }
 
 a:hover{
-    text-decoration: underline;
+    color: teal;
+}
+
+#updatep{
+    top: 12vmax;
+    left: 6%;
+    background: transparent;
+    color: white;
 }

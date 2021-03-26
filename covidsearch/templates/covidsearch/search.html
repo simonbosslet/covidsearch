@@ -5,7 +5,7 @@
 
 {%block body%}
 <h1 id="title2">Results for: <span id="highlight">{{q}}</span></h1>
-<p class="resultCount">{{resultCount}} results</p>
+<p class="resultCount">{{resultCount}} posts containing <em></em></p>
 <ul class="pageselector">
     <form action="{% url 'search'%}" method="POST">
     {%csrf_token%}
@@ -22,6 +22,11 @@
 {%if noResults%}
 <script>
     alert('No results.')
+    location.href="/archive"
+</script>
+{%elif short%}
+<script>
+    alert('Please use a more specific query.')
     location.href="/archive"
 </script>
 {%else%}

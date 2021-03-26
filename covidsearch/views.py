@@ -5,7 +5,7 @@ posts = post.objects.all()
 tracker = 2
 q = None
 loadedpostnum = 5
-qs = []
+qs = ['a']
 searchResults = []
 result_count = 0
 page = 0
@@ -38,12 +38,14 @@ def post(request, pk):
 def search(request):
     global q, tracker, qs, searchResults, result_count, page, pages, allsearchs
     page = 0
+    q = qs[-1]
     if request.method == "POST":
         #some search queries such as 'a' and 'http' were causing bugs, decided to just redirect to homepage in those cases.
-        if request.POST.get('search-query') == 'a' or 'http' in request.POST.get('search-query'):
-            return render(request, 'covidsearch/index.html', {
+        if len(str(request.POST.get('search-query'))) == 1 or 'http' in str(request.POST.get('search-query')):
+            return render(request, 'covidsearch/search.html', {
             'posts': posts,
-            'reverse': False
+            'reverse': False,
+            'short': True
         })
         #if searching 
         elif request.POST.get('search-query') is not None:
@@ -62,6 +64,7 @@ def search(request):
         if not searched:
             searchResults = []
             result_count = 0
+            print('searching')
             #if message/title contains query
             for post in posts.filter(message__contains=q):
                 searchResults.append(post)
@@ -78,9 +81,12 @@ def search(request):
             if len(searchResults) < 25:
                 #splits search results into pages
                 searchResults = [searchResults[x:x+25] for x in range(0, len(searchResults), 25)]
+                print(searchResults)
             else:
                 #splits search results into pages
                 searchResults = [searchResults[x:x+10] for x in range(0, len(searchResults), 10)]
+                print(len(searchResults))
+                print(searchResults[-1])
             allsearchs.append(searchResults)
             pages = [searchResults.index(i)+1 for i in searchResults]
             try:
@@ -93,16 +99,20 @@ def search(request):
                 activepage = None
                 results = None
             else:
-                activepage = searchResults.index(searchResults[int(page)])+1
+                activepage = searchResults[0]
                 results = searchResults[int(page)]
                 noResults = False
+        else:
+            activepage = searchResults.index(searchResults[int(page)])
+            results = searchResults[int(page)]
+            noResults = False
         #used the tracker variable in order to keep track of whether to sort by new or by old
         #if tracker is divisible by 2, sort by oldest
         if (tracker % 2) == 0:
             tracker += 1
             return render(request, 'covidsearch/search.html', {
             'results': results,
-            'pages': pages,
+            'pages': [i for i in pages],
             'q': q,
             'resultCount': result_count,
             'reverse': True,
@@ -113,7 +123,7 @@ def search(request):
             tracker += 1
             return render(request, 'covidsearch/search.html', {
             'results': results,
-            'pages': pages,
+            'pages': [i for i in pages],
             'q': q,
             'resultCount': result_count,
             'reverse': False,
