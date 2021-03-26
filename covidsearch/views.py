@@ -64,7 +64,6 @@ def search(request):
         if not searched:
             searchResults = []
             result_count = 0
-            print('searching')
             #if message/title contains query
             for post in posts.filter(message__contains=q):
                 searchResults.append(post)
@@ -81,12 +80,9 @@ def search(request):
             if len(searchResults) < 25:
                 #splits search results into pages
                 searchResults = [searchResults[x:x+25] for x in range(0, len(searchResults), 25)]
-                print(searchResults)
             else:
                 #splits search results into pages
                 searchResults = [searchResults[x:x+10] for x in range(0, len(searchResults), 10)]
-                print(len(searchResults))
-                print(searchResults[-1])
             allsearchs.append(searchResults)
             pages = [searchResults.index(i)+1 for i in searchResults]
             try:
